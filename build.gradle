@@ -1,0 +1,64 @@
+group 'gradle-tutorial-pluralsight'
+version '1.0-SNAPSHOT'
+
+//
+// Plugin udostepnia taski javowe, obsluguje model katalogow
+// projektu mavenowego.
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+// -- wrapper
+// Co robi ?
+// Instaluje wrapper o okresloej wersji.
+// Wersja wrappera dla ktorej buildowany jest kod.
+// daje to mozliwosc polaczenia buildu kodu z okreslona wersja
+// gradela. Czyli nie moze dojsc do sytuacji, ze buildujemu projekt ze zla wersja gradela.
+// Problem moze byc ze skryptami buildowymi, wraper zapewnia ta sama wersje, dla ktorej sa
+// skrypty buildowe;
+
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.6'
+}
+wrapper.description "gradleVersion = '2.6'"
+
+
+//
+
+project.task("Task1")
+task("Task2") // z pominieciem obiektu project, gradle wie, ze task obiektem na poziomie Task
+
+task Task4
+Task4.description = "Taski moga miec description."
+Task4.doLast {
+    println "Processing doLast."
+}
+
+
+task TODO;
+TODO.description = "TODO Task";
+TODO.doLast{
+    println "Processing TODO Tasks A"
+}
+
+TODO << {println "Processing TODO Tasks << "}
+TODO.doLast{
+    println "Processing TODO Tasks B"
+}
+
+
+task taskWithDescriptionAndDoLast {
+    description = "Dwie sroki za ogon";
+    doLast {
+        println "Action: Dwie sroki za ogon: description + doLast";
+    }
+}
